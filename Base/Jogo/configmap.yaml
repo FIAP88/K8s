@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jogo-config
+data:
+  configValue: "valor-de-config-jogo"
+  urlUsuario: "http://usuario-service"
+  urlPagamento: "http://pagamento-service"
