@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: jogo-config
+  namespace: jogo
 data:
   configValue: "valor-de-config-jogo"
   urlUsuario: "http://usuario-service"

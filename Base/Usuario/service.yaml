@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: usuario-service
+  namespace: usuario
 spec:
   type: ClusterIP
   selector:

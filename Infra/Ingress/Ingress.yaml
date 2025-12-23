@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cloudgames-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    http:
+      paths:
+      - path: /jogo
+        pathType: Prefix
+        backend:
+          service:
+            name: jogo-service
+            port:
+              number: 80
+      - path: /usuario
+        pathType: Prefix
+        backend:
+          service:
+            name: usuario-service
+            port:
+              number: 80
+      - path: /pagamento
+        pathType: Prefix
+        backend:
+          service:
+            name: pagamento-service
+            port:
+              number: 80

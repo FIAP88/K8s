@@ -3,8 +3,6 @@ kind: Service
 metadata:
   name: apim-entry-service
   namespace: default
-  annotations:
-    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
   type: LoadBalancer
   selector:
