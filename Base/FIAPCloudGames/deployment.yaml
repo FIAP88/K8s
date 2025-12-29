@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-pagamento-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-pagamento
+  template:
+    metadata:
+      labels:
+        app: ms-pagamento
+    spec:
+      containers:
+      - name: container-api
+        image: acrtechchallengefase5.azurecr.io/pagamento-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080    
+        env:
+
+        - name: ASPNETCORE_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: api-pagamento-config
+              key: ASPNETCORE_ENVIRONMENT
+
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: api-pagamento-secret
+              key: SqlConnectionString
+
+        - name: ConnectionStrings__QueueConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: api-pagamento-secret
+              key: QueueConnectionString
+              
+        - name: RabbitMQ__QueueName
+          valueFrom:
+            configMapKeyRef:
+              name: api-pagamento-config
+              key: RabbitMQ__QueueName
+
+        resources:
+          requests:   # <--- OBRIGATÓRIO PARA O HPA
+            cpu: "100m"  # 100 millicores (0.1 CPU)
+            memory: "64Mi"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"

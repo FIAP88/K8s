@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: api-pagamento-config
+data:
+  ASPNETCORE_ENVIRONMENT: "Production"
+  RabbitMQ__QueueName: "fila-cobranca"

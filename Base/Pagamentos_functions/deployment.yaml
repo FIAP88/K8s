@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: function-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: function
+  template:
+    metadata:
+      labels:
+        app: function
+    spec:
+      containers:
+      - name: container-function
+        image: acrtechchallengefase5.azurecr.io/function-app:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:   
+            cpu: "100m"   
+            memory: "64Mi"
+          limits:
+            memory: "512Mi"
+            cpu: "200m"
+        env:
+        - name: FUNCTIONS_WORKER_RUNTIME
+          valueFrom:
+            configMapKeyRef:
+              name: function-config
+              key: FUNCTIONS_WORKER_RUNTIME
+        - name: QueueConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: function-secrets
+              key: QueueConnectionString
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: function-secrets
+              key: SqlConnectionString

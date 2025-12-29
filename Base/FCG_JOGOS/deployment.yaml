@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-jogo-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-jogo
+  template:
+    metadata:
+      labels:
+        app: ms-jogo
+    spec:
+      containers:
+      - name: container-api
+        image: acrtechchallengefase5.azurecr.io/jogo-api:latest  
+        imagePullPolicy: Always   
+        ports:
+        - containerPort: 8080
+        env:
+
+        - name: ASPNETCORE_ENVIRONMENT
+          valueFrom:
+            configMapKeyRef:
+              name: api-jogos-config
+              key: ASPNETCORE_ENVIRONMENT
+              
+        - name: ApiSettings__Pagamentos__BaseUrl
+          valueFrom:
+            configMapKeyRef:
+              name: api-jogos-config
+              key: UrlPagamentos
+        - name: ElasticSearch__Uri
+          valueFrom:
+            configMapKeyRef:
+              name: api-jogos-config
+              key: UrlElastic
+
+        - name: ConnectionStrings__DefaultConnection
+          valueFrom:
+            secretKeyRef:
+              name: api-jogos-secret
+              key: SqlConnectionString
+        - name: ConfigSecret__Secret
+          valueFrom:
+            secretKeyRef:
+              name: api-jogos-secret
+              key: JwtSecret
+        - name: ApplicationInsights__ConnectionString
+          valueFrom:
+            secretKeyRef:
+              name: api-jogos-secret
+              key: AppInsights
+        - name: ApiSettings__Pagamentos__SubscriptionKey
+          valueFrom:
+            secretKeyRef:
+              name: api-jogos-secret
+              key: PagamentoKey
+
+        resources:
+          requests:   
+            cpu: "100m"  
+            memory: "64Mi"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"

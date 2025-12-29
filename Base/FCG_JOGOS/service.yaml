@@ -2,11 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: jogo-service
-  namespace: jogo
 spec:
   type: ClusterIP
   selector:
-    app: jogo
+    app: ms-jogo 
   ports:
-    - port: 80
-      targetPort: 80
+    - protocol: TCP
+      port: 80      
+      targetPort: 8080 
+      

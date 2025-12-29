@@ -1,0 +1,30 @@
+-> NGINX Ingress Controller
+Você instala uma única vez no cluster:
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
+
+7️⃣ Ordem correta de aplicação (muito importante)
+# 1. NGINX Ingress Controller
+kubectl apply -f infra/ingress-nginx/
+
+# 2. Services (ClusterIP)
+kubectl apply -f jogo/service.yaml
+kubectl apply -f usuario/service.yaml
+kubectl apply -f pagamento/service.yaml
+
+# 3. Ingress
+kubectl apply -f infra/ingress/ingress.yaml
+
+8️⃣ Como testar depois
+kubectl get svc -n ingress-nginx
+
+
+-> Como fica o acesso final
+
+Supondo que o EXTERNAL-IP do NGINX seja 20.50.10.8:
+
+http://20.50.10.8/jogo/swagger
+http://20.50.10.8/usuario/swagger
+http://20.50.10.8/pagamento/swagger
+
+

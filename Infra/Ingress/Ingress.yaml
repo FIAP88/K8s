@@ -6,27 +6,30 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-    http:
-      paths:
-      - path: /jogo
-        pathType: Prefix
-        backend:
-          service:
-            name: jogo-service
-            port:
-              number: 80
-      - path: /usuario
-        pathType: Prefix
-        backend:
-          service:
-            name: usuario-service
-            port:
-              number: 80
-      - path: /pagamento
-        pathType: Prefix
-        backend:
-          service:
-            name: pagamento-service
-            port:
-              number: 80
+    - http:
+        paths:
+          - path: /jogo
+            pathType: Prefix
+            backend:
+              service:
+                name: jogo-service
+                port:
+                  number: 80
+
+          - path: /usuario
+            pathType: Prefix
+            backend:
+              service:
+                name: usuario-service
+                port:
+                  number: 80
+
+          - path: /pagamento
+            pathType: Prefix
+            backend:
+              service:
+                name: pagamento-service
+                port:
+                  number: 80

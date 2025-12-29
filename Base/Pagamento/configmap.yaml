@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: pagamento-config
-  namespace: pagamento
-data:
-  configValue: "valor-de-config-pagamento"
